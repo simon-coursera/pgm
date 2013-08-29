@@ -81,5 +81,15 @@ numAlleles = length(alleleFreqs); % Number of alleles
 % numPeople+1 - 2*numPeople: second parent copy of gene variables
 % 2*numPeople+1 - 3*numPeople: phenotype variables
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
-
+for i = 1:numPeople
+  if pedigree.parents(i,1) == 0   #no parent
+    factorList(i) = childCopyGivenFreqsFactor(alleleFreqs, i);
+    factorList(i + numPeople) = childCopyGivenFreqsFactor(alleleFreqs, i + numPeople);
+    factorList(i + 2 * numPeople) = phenotypeGivenCopiesFactor(alphaList, numAlleles, i, i + numPeople, i + 2 * numPeople);
+  else
+    factorList(i) = childCopyGivenParentalsFactor(numAlleles, i, pedigree.parents(i,1), pedigree.parents(i,1) + numPeople );
+    factorList(i + numPeople) = childCopyGivenParentalsFactor(numAlleles, i + numPeople, pedigree.parents(i,2), pedigree.parents(i,2) + numPeople);
+    factorList(i + 2 * numPeople) = phenotypeGivenCopiesFactor(alphaList, numAlleles, i, i + numPeople, i + 2 * numPeople);
+  endif;
+endfor;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
