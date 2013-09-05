@@ -66,8 +66,7 @@ for a1 = 1:2
   for a2 = 1:2
     for a3 = 1:2
       for a4 = 1:2
-        p = alleleWeights{1}(a1) + alleleWeights{2}(a2) + alleleWeights{1}(a3) + alleleWeights{2}(a4);
-        p = (e ^ p) / (1 + e ^ p)
+        p = computeSigmoid(alleleWeights{1}(a1) + alleleWeights{2}(a2) + alleleWeights{1}(a3) + alleleWeights{2}(a4));
         phenotypeFactor = SetValueOfAssignment(phenotypeFactor, [1, a1, a2, a3, a4], p);
         phenotypeFactor = SetValueOfAssignment(phenotypeFactor, [2, a1, a2, a3, a4], 1 - p);
       endfor;
